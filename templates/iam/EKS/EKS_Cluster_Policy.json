@@ -1,0 +1,182 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+            {
+                "Action": [
+                    "autoscaling:DescribeAutoScalingGroups",
+                    "autoscaling:DescribeAutoScalingInstances",
+                    "autoscaling:DescribeLaunchConfigurations",
+                    "autoscaling:DescribeTags",
+                    "autoscaling:SetDesiredCapacity",
+                    "autoscaling:TerminateInstanceInAutoScalingGroup",
+                    "autoscaling:*",
+                    "eks:*",
+                    "ec2:DescribeLaunchTemplateVersions"
+                ],
+                "Resource": "*",
+                "Effect": "Allow"
+            },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:GetRegistryPolicy",
+                "ecr:DescribeRegistry",
+                "ecr:GetAuthorizationToken",
+                "ecr:PutReplicationConfiguration"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "logs:List*",
+                "logs:Get*",
+                "logs:Describe*",
+                "logs:CancelExportTask",
+                "logs:Delete*",
+                "logs:PutDestination*",
+                "logs:StopQuery",
+                "logs:PutQueryDefinition",
+                "logs:CreateLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor3",
+            "Effect": "Allow",
+            "Action": [
+                "logs:DisassociateKmsKey",
+                "logs:DeleteSubscriptionFilter",
+                "logs:DeleteLogGroup",
+                "logs:StartQuery",
+                "logs:Create*",
+                "logs:DeleteRetentionPolicy",
+                "logs:AssociateKmsKey",
+                "logs:FilterLogEvents",
+                "logs:PutSubscriptionFilter",
+                "logs:PutRetentionPolicy",
+                "logs:GetLogGroupFields"
+            ],
+            "Resource": "arn:aws:logs:*:${account_id}:log-group:*"
+        },
+        {
+        "Sid": "VisualEditor4",
+        "Effect": "Allow",
+        "Action": [
+            "ssm:List*",
+            "ssm:Describe*",
+            "ssm:Get*",
+            "ssm:PutConfigurePackageResult"        
+        ],
+        "Resource": "*"
+    },
+    {
+        "Sid": "VisualEditor5",
+        "Effect": "Allow",
+        "Action": [
+            "s3:DeleteObjectVersion",
+            "s3:Get*",
+            "s3:RestoreObject",
+            "s3:ReplicateObject",
+            "s3:AbortMultipartUpload",
+            "s3:DeleteObject",
+            "s3:PutObjectLegalHold",
+            "s3:InitiateReplication",
+            "s3:PutObject",
+            "s3:PutObjectRetention",
+            "s3:ReplicateDelete",
+            "s3:GetObjectVersion"
+        ],
+        "Resource": [
+            "arn:aws:s3:::*/*"
+        ]
+    },
+    {
+        "Sid": "VisualEditor6",
+        "Effect": "Allow",
+        "Action": [
+            "s3:Get*",
+            "s3:List*"
+        ],
+        "Resource": "*"
+    },
+    {
+        "Sid": "VisualEditor7",
+        "Effect": "Allow",
+        "Action": [
+            "s3:CreateBucket",
+            "s3:Get*",
+            "s3:DeleteBucketWebsite",
+            "s3:PutLifecycleConfiguration",
+            "s3:PutReplicationConfiguration",
+            "s3:PutBucket*",
+            "s3:Describe*",
+            "s3:PutAccelerateConfiguration",
+            "s3:List*",
+            "s3:PutEncryptionConfiguration",
+            "s3:UpdateJobPriority",
+            "s3:DeleteBucket",
+            "s3:PutIntelligentTieringConfiguration",
+            "s3:PutMetricsConfiguration",
+            "s3:UpdateJobStatus",
+            "s3:PutInventoryConfiguration"
+        ],
+        "Resource": [
+            "arn:aws:s3:::*"
+        ]
+    },
+    {
+        "Sid": "VisualEditor8",
+        "Effect": "Allow",
+        "Action": [
+            "sns:List*",
+            "sns:Unsubscribe",
+            "sns:Get*",
+            "sns:Create*",
+            "sns:OptInPhoneNumber",
+            "sns:CheckIfPhoneNumberIsOptedOut",
+            "sns:Set*"
+        ],
+        "Resource": "*"
+    },
+    {
+        "Sid": "VisualEditor9",
+        "Effect": "Allow",
+        "Action": "sns:*",
+        "Resource": "arn:aws:sns:*:${account_id}:*"
+    },
+    {
+        "Sid": "VisualEditor10",
+        "Effect": "Allow",
+        "Action": [
+            "dynamodb:List*",
+            "dynamodb:Describe*",
+            "dynamodb:PurchaseReservedCapacityOfferings"
+        ],
+        "Resource": "*"
+    },
+    {
+        "Sid": "VisualEditor11",
+        "Effect": "Allow",
+        "Action": "dynamodb:*",
+        "Resource": "arn:aws:dynamodb:*:${account_id}:table/*"
+    },
+    {
+        "Sid": "VisualEditor12",
+        "Effect": "Allow",
+        "Action": "dynamodb:*",
+        "Resource": [
+            "arn:aws:dynamodb:*:${account_id}:table/*/index/*",
+            "arn:aws:dynamodb::${account_id}:global-table/*",
+            "arn:aws:dynamodb:*:${account_id}:table/*/stream/*",
+            "arn:aws:dynamodb:*:${account_id}:table/*/backup/*",
+            "arn:aws:dynamodb:*:${account_id}:table/*/export/*"
+        ]
+    }
+    ]
+}

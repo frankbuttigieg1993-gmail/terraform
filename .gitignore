@@ -1,0 +1,7 @@
+.terraform*
+**/id_rsa*
+**/*.key
+**/*.pem
+accounts/Test/SFTP-Server/sftp-server.tf
+accounts/Dev/SFTP-Server/sftp-server.tf
+archive/*

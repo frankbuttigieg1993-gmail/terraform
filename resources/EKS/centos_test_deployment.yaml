@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: centos
+  namespace: default
+  labels:
+    app: centos
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 30
+  selector:
+    matchLabels:
+      app: centos
+  template:
+    metadata:
+      labels:
+        app: centos
+    spec:
+      containers:
+      - name: centos
+        image: ubuntu:25.04
+        imagePullPolicy: Always
+#        image: centos:7
+        command: [ "/bin/bash" ]
+        args: [ "-c" , "sleep 5000"]
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: centos
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: centos
