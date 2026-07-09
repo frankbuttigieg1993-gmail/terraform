@@ -14,18 +14,18 @@ sudo service docker start
 sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
 
-# Installing Kubectl
+# # Installing Kubectl
 
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=0
-repo_gpgcheck=0
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-EOF
-yum install -y kubectl
+# cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+# [kubernetes]
+# name=Kubernetes
+# baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+# enabled=1
+# gpgcheck=0
+# repo_gpgcheck=0
+# gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+# EOF
+# yum install -y kubectl
 
 # Installing AWS CLI
 echo "[+] Installing AWS CLI"
