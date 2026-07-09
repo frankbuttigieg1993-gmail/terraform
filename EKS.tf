@@ -26,15 +26,6 @@ resource "aws_iam_policy_attachment" "EKS_Cluster_Policy_Attachment" {
   policy_arn = aws_iam_policy.EKS_Cluster_Policy.arn
 }
 
-resource "aws_iam_policy_attachment" "EKS_AmazonEKSWorkerNodePolicy_Managed_Policy_Attachment" {
-lifecycle {
-    ignore_changes = [roles]
-  }
-  name       = "EKS Cluster AmazonEKSWorkerNodePolicy Managed Policy Attachment"
-  roles      = [aws_iam_role.EKS_Cluster.name, aws_iam_role.EKS_Developer.name]
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-}
-
 resource "aws_iam_policy_attachment" "EKS_AmazonSSMManagedInstanceCore_Managed_Policy_Attachment" {
   name       = "EKS Cluster AmazonSSMManagedInstanceCore Managed Policy Attachment"
   roles      = [aws_iam_role.EKS_Cluster.name]
@@ -91,11 +82,6 @@ resource "aws_iam_policy_attachment" "EKS_CloudWatchAgentServerPolicy_Attachment
   name       = "EKS Cluster CloudWatchAgentServerPolicy Policy Attachment"
   roles      = [aws_iam_role.EKS_Cluster.name]
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-}
-
-resource "aws_iam_role" "EKS_Developer" {
-  name = "EKS_Developer"
-  assume_role_policy = templatefile("${path.module}/templates/iam/EKS/EKS-Developer-assumerole-policy.json", {account_id = var.account_id})
 }
 
 ####################################################### EKS Security Groups ##########################################################################

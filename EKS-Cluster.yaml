@@ -1,0 +1,73 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: EKS-DEV
+  region: ap-southeast-2
+  version: "1.36"
+iam:
+  withOIDC: true
+
+vpc:
+  id: "vpc-0cc923593f8d9050f"
+  # This allows the Management and Shared Resources VPC to Connect to the EKS Cluster via HTTPS
+  extraCIDRs: ["10.0.0.0/16", "10.1.0.0/16"]
+#  securityGroup: sg-0e9976afae1f759eb
+  # sharedNodeSecurityGroup: sg-0e9976afae1f759eb
+  # manageSharedNodeSecurityGroupRules: false
+  subnets:
+    public:
+      eks-dev-public-2a:
+        id: "subnet-093c97f22e6ce21fe"
+
+      eks-dev-public-2b:
+        id: "subnet-02653778106fca892"
+
+      eks-dev-public-2c:
+        id: "subnet-091c4a8ca53b48d3e"
+    private:
+      eks-dev-private-2a:
+        id: "subnet-0b38821d605af3a64"
+
+      eks-dev-private-2b:
+        id: "subnet-00e01711f2d72df1b"
+
+      eks-dev-private-2c:
+        id: "subnet-0ddc7eac969d8019a"
+
+privateCluster:
+  enabled: false
+  additionalEndpointServices:
+  # For Cluster Autoscaler
+  - "autoscaling"
+  # CloudWatch logging
+  - "logs"
+# addons:
+#   wellKnownPolicies:
+#     autoscaler: true
+#     awsLoadBalancerController: true
+#     certManager: true
+managedNodeGroups:
+  - name: Linux-NodeGroup-1
+    instanceType: t3.medium
+    amiFamily: AmazonLinux2023
+    minSize: 1
+    desiredCapacity: 1
+    maxSize: 1
+    privateNetworking: true
+    volumeType: gp3
+    volumeSize: 80
+    # volumeName: EKS
+    tags:
+      'k8s.io/cluster-autoscaler/eks': 'owned'
+      'k8s.io/cluster-autoscaler/enabled': 'TRUE'
+    iam:
+      instanceRoleARN: "arn:aws:iam::865983312994:role/EKS_Cluster_Role"
+    subnets:
+      - eks-dev-private-2a
+      - eks-dev-private-2b
+      - eks-dev-private-2c
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["api","audit", "authenticator"]
+    logRetentionInDays: 365

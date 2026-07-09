@@ -51,31 +51,6 @@ variable "vpc_tags" {
   }
 }
 
-data "aws_vpc" "eks_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = ["${var.account}-VPC"]
-  }
-}
-
-data "aws_subnet" "eks_subnet_private_2a" {
-  vpc_id = data.aws_vpc.eks_vpc.id
-
-  filter {
-    name   = "tag:Name"
-    values = ["${var.account_lowercase}-private-2a"]
-  }
-}
-
-data "aws_subnet" "eks_subnet_private_2b" {
-  vpc_id = data.aws_vpc.eks_vpc.id
-
-  filter {
-    name   = "tag:Name"
-    values = ["${var.account_lowercase}-private-2b"]
-  }
-}
-
 variable "env" {
   description = "Name of the Environment"
   type        = string
