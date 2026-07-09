@@ -4,15 +4,13 @@ on:
   push:
     branches:
       - main
-    paths:
-      - infrastructure/**
   workflow_dispatch:
 
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-  TF_VAR_github_password: ${{ secrets.CUSTOM_PAT }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_GITHUB_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_SECRET_ACCESS_KEY_ID }}
+  AWS_REGION: ap-southeast-2
+  TF_VAR_github_password: ${{ secrets.AWS_GITHUB_RUNNER_TOKEN }}
 
 jobs:
   terraform-apply:
@@ -21,14 +19,13 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./infrastructure
 
     steps:
     
     - name: Inform on PR that Apply is Running
       uses: mshick/add-pr-comment@v1
       with:
-        repo-token: ${{ secrets.CUSTOM_PAT }}
+        repo-token: ${{ secrets.AWS_GITHUB_RUNNER_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         message: |
           ***Running terraform apply***
@@ -75,7 +72,7 @@ jobs:
       if: steps.plan.outcome == 'success' && steps.apply.outcome == 'success'
       uses: mshick/add-pr-comment@v1
       with:
-        repo-token: ${{ secrets.CUSTOM_PAT }}
+        repo-token: ${{ secrets.AWS_GITHUB_RUNNER_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         message: |
           Applying **Infra**:
@@ -91,7 +88,7 @@ jobs:
       if: steps.plan.outcome == 'failure'
       uses: mshick/add-pr-comment@v1
       with:
-        repo-token: ${{ secrets.CUSTOM_PAT }}
+        repo-token: ${{ secrets.AWS_GITHUB_RUNNER_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         message: |
           Plan failed for **Infra**:
@@ -107,7 +104,7 @@ jobs:
       if: steps.apply.outcome == 'failure'
       uses: mshick/add-pr-comment@v1
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token: ${{ secrets.AWS_GITHUB_RUNNER_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         message: |
           Apply failed for **Infra**:
