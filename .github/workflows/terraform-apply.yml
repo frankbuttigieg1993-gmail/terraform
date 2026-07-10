@@ -1,4 +1,5 @@
-name: 'Terraform Apply'
+name: Terraform Apply
+run-name: PR-${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
 
 on:
   push:
