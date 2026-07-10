@@ -13,6 +13,7 @@ sudo yum install -y docker git libicu
 sudo service docker start
 sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
+sudo nvm install --lts
 
 # # Installing Kubectl
 
@@ -34,9 +35,22 @@ unzip awscliv2.zip
 sudo ./aws/install
 
 # Install OpenJDK 11
-# sudo yum install java-1.8.0-openjdk-devel -y
-sudo amazon-linux-extras install java-openjdk11 -y
-java -version
+sudo amazon-linux-extras enable java-openjdk11
+sudo yum clean metadata
+sudo yum install -y java-11-openjdk-devel unzip wget
 
-# This setup script assumes that any project that uses Ansible, Gradle or builds with Java 8 or 11 will use docker images in the pipeline
-# See the VHA project for examples
+# Install Gradle
+
+cd /tmp
+sudo mkdir /opt/gradle
+sudo wget https://services.gradle.org/distributions/gradle-9.6.0-bin.zip
+sudo unzip -d /opt/gradle gradle-9.6.0-bin.zip
+
+sudo tee /etc/profile.d/gradle.sh << 'EOF'
+export GRADLE_HOME=/opt/gradle/gradle-9.6.0
+export PATH=$GRADLE_HOME/bin:$PATH
+EOF
+
+sudo chmod +x /etc/profile.d/gradle.sh
+source /etc/profile.d/gradle.sh
+gradle -v
