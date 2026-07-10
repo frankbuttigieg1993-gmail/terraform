@@ -2,7 +2,7 @@ variable "amis" {
   type = map(string)
   default = {
     "AmazonLinux2" = "ami-0099823645f06b6a1"
-    "Centos" = "ami-05f50d9ec7e4c3b02"
+    "Centos"       = "ami-05f50d9ec7e4c3b02"
   }
 }
 

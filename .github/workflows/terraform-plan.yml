@@ -13,7 +13,6 @@ env:
   TF_VAR_github_password: ${{ secrets.AWS_GITHUB_RUNNER_TOKEN }}
 
 jobs:
-
   infra_plan:
     name: 'Terraform Plan'
     runs-on: ubuntu-latest
@@ -23,10 +22,10 @@ jobs:
 
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.2.8
 
@@ -48,9 +47,7 @@ jobs:
 
     - name: Add Plan Comment
       if: steps.plan.outcome == 'success'
-      uses: actions/github-script@v6
-      env:
-        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      uses: actions/github-script@v7
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -58,10 +55,12 @@ jobs:
           #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
           #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
           #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-      
+          
           <details><summary>Show Plan</summary>
           
-          \`\`\`${process.env.PLAN}\`\`\`
+          \`\`\`
+          ${{ steps.plan.outputs.stdout }}
+          \`\`\`
           
           </details>
           
@@ -76,17 +75,17 @@ jobs:
 
     - name: Post Plan Failure 
       if: steps.plan.outcome == 'failure'
-      uses: actions/github-script@v6
-      env:
-        PLAN_FAIL: "terraform\n${{ steps.plan.outputs.stderr }}"
+      uses: actions/github-script@v7
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-      
+          
           <details><summary>Show Plan Error</summary>
           
-          \`\`\`${process.env.PLAN_FAIL}\`\`\`
+          \`\`\`
+          ${{ steps.plan.outputs.stderr }}
+          \`\`\`
           
           </details>
           
@@ -98,5 +97,3 @@ jobs:
             repo: context.repo.repo,
             body: output
           })
-
-    

@@ -13,7 +13,7 @@ output "vpc_arn" {
 }
 
 output "vpc_main_route_table_id" {
-  value = "${module.vpc.vpc_main_route_table_id}"
+  value = module.vpc.vpc_main_route_table_id
 }
 
 output "Private_Subnet_IDs" {
