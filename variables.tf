@@ -90,7 +90,7 @@ variable "region" {
 }
 
 ############################### VPC EKS #########################################
- 
+
 variable "seperate_vpc_eks" {
   description = "Boolean to determine whether to create separate VPC for EKS Cluster"
   default     = "false"

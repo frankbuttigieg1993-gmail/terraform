@@ -1,9 +1,9 @@
 ####################################         Private NACL                         ####################################
 
 resource "aws_network_acl" "private_subnets_nacl" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id     = module.vpc.vpc_id
   subnet_ids = aws_subnet.private.*.id
-    tags = {
+  tags = {
     Name = "NACL for Private Subnets"
   }
 }
@@ -30,9 +30,9 @@ resource "aws_network_acl_rule" "Allow_All" {
 ####################################         Public NACL                         ####################################
 
 resource "aws_network_acl" "public_subnets_nacl" {
-  vpc_id = module.vpc.vpc_id
+  vpc_id     = module.vpc.vpc_id
   subnet_ids = aws_subnet.public.*.id
-    tags = {
+  tags = {
     Name = "NACL for Public Subnets"
   }
 }
