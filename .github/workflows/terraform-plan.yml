@@ -1,4 +1,4 @@
-name: 'Terraform Plan'
+name: PR-${{ github.event.pull_request.number }} - Terraform Plan
 
 on:
   pull_request:
