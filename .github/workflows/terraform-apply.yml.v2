@@ -1,16 +1,10 @@
 name: Terraform Apply
-run-name: Terraform Apply - ${{ github.sha }}
-
-#### You can name the pipeline with the PR title if you change the pipeline to use 
-# run-name: PR-${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
-# on:
-#   pull_request:
-#     types: [closed]
-
+run-name: PR-${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}
+#### This lets you use the PR title however you aren't running against the code that is actually merged to main.
+# This is why the push model is better 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [closed]
   workflow_dispatch:
 
 env:
@@ -22,6 +16,7 @@ env:
 jobs:
   terraform-apply:
     name: Terraform Apply
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     defaults:
       run:
