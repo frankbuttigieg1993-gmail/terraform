@@ -3,6 +3,7 @@ variable "amis" {
   default = {
     "AmazonLinux2" = "ami-0099823645f06b6a1"
     "Centos"       = "ami-05f50d9ec7e4c3b02"
+    "AmazonLinux2023" = "ami-0b2c3e29876d98d1d"
   }
 }
 

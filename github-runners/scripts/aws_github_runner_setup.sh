@@ -13,7 +13,11 @@ sudo yum install -y docker git libicu
 sudo service docker start
 sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
-sudo nvm install --lts
+
+# Install NVM and Node
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.5/install.sh | bash
+nvm install --lts
 
 # # Installing Kubectl
 
@@ -35,9 +39,9 @@ unzip awscliv2.zip
 sudo ./aws/install
 
 # Install OpenJDK 11
-sudo amazon-linux-extras enable java-openjdk11
+sudo yum install -y java-21-amazon-corretto-devel unzip wget
 sudo yum clean metadata
-sudo yum install -y java-11-openjdk-devel unzip wget
+
 
 # Install Gradle
 

@@ -53,7 +53,7 @@ resource "aws_iam_policy_attachment" "aws_github_runners_policy_Attachment" {
 }
 
 resource "aws_instance" "aws_github_runner_ami" {
-  ami                         = var.amis["AmazonLinux2"]
+  ami                         = var.amis["AmazonLinux2023"]
   instance_type               = "t3.medium"
   disable_api_termination     = false
   associate_public_ip_address = true
